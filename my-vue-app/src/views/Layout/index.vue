@@ -16,7 +16,13 @@
  import LayoutNav from './components/LayoutNav.vue';
  import LayoutFooter from './components/LayoutFooter.vue';
  import LayoutFixNav from './components/LayoutFixNav.vue';
- 
+
+import {useCategory} from '@/stores/category.js';
+import { onMounted } from 'vue';
+  const store=useCategory()
+  onMounted(()=>{
+    store.getLayoutNavData()
+  })
 </script>
 
 <style lang="scss" scoped>

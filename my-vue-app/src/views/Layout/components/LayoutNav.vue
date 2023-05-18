@@ -5,7 +5,10 @@
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in data.navData" :key="item.id">
+        <li>
+          <RouterLink to="">首页</RouterLink>
+        </li>
+        <li class="home" v-for="item in store.data.navData" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
         
@@ -20,24 +23,9 @@
 </template>
 
 <script setup>
-import {getLayoutNav} from '@/apis/layout'
-import {reactive,onMounted}from 'vue'
-let data=reactive({
-   navData:[]
-})
-//生命周期
-onMounted(()=>{
-  getLayoutNavData()
-})
+import { useCategory } from '@/stores/category.js';
+const store=useCategory();
 
-let getLayoutNavData=async()=>{
-   let res=await getLayoutNav();
-   console.log(res);
-   if(res.code==1){
-     data.navData=res.result;
-     console.log(data.navData);
-   }
-}
 
 
 </script>

@@ -7,32 +7,8 @@
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">母婴</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">个护</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">严选</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">数码</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">运动</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">杂项</RouterLink>
+        <li class="home" v-for="item in store.data.navData" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
 
@@ -45,9 +21,10 @@
 </template>
 
 <script setup>
-import { useScroll } from '@vueuse/core'
+import { useScroll } from '@vueuse/core';
+import { useCategory } from '@/stores/category.js';
 const {y}=useScroll(window)
-
+const store=useCategory()
 </script>
 
 <style lang="less" scoped>
