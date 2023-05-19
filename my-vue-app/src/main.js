@@ -1,12 +1,18 @@
-import { createApp } from 'vue'
+import { createApp } from "vue";
 // import './style.css'
-import './styles/common.less'
-import router from './router'
+import "./styles/common.less";
+import router from "./router";
 
-import {createPinia} from 'pinia'
+import { createPinia } from "pinia";
+
+//导入图片懒加载
+import { lazyPlugin } from "./directives";
 // 创建 Pinia 实例
-const pinia = createPinia()
+const pinia = createPinia();
 
-import App from './App.vue'
+import App from "./App.vue";
+// const app = createApp(App);
 
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App).use(router).use(pinia).use(lazyPlugin).mount("#app");
+
+

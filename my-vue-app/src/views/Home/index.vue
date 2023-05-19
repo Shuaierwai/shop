@@ -3,8 +3,9 @@
       <HomeCategory/>
       <HomeBanner/>
     </div>
-    <HomeHot/>
     <HomeNew/>
+    <HomeHot/>
+  
     <HomeProduct/>
 </template>
 
@@ -14,6 +15,8 @@
   import HomeHot from './components/HomeHot.vue';
   import HomeNew from './components/HomeNew.vue';
   import HomeProduct from './components/HomeProduct.vue';
+  // 测试封装的静态组件
+  // import HomeCommonUse from './components/HomeCommonUse.vue';
 </script>
 
 <style lang="less" scoped>
