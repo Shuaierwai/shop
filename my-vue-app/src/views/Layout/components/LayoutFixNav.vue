@@ -5,10 +5,10 @@
       <!-- 导航区域 -->
       <ul class="app-header-nav" >
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink :class="{ 'active': isShow }" to="/">首页</RouterLink>
         </li>
         <li class="home" v-for="item in store.data.navData" :key="item.id">
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
 
@@ -23,8 +23,21 @@
 <script setup>
 import { useScroll } from '@vueuse/core';
 import { useCategory } from '@/stores/category.js';
+import {ref,watch} from 'vue'
+import {useRouter} from 'vue-router'
 const {y}=useScroll(window)
 const store=useCategory()
+
+const isShow=ref(false)
+const route=useRouter();
+
+watch(()=>route.currentRoute.value.path,()=>{
+  if(route.currentRoute.value.path=='/'){
+   isShow.value=true
+  }else{
+    isShow.value=false
+  }
+},{immediate:true})
 </script>
 
 <style lang="less" scoped>

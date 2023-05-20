@@ -9,36 +9,90 @@
         </el-breadcrumb>
       </div>
     </div>
+    <!-- 轮播图 -->
+    <div class="home-banner">
+      <el-carousel height="500px">
+        <el-carousel-item v-for="item in data2.bannerData" :key="item.id">
+          <img :src="item.imgUrl" alt="" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+
+    <!-- 分类数据 -->
+    <div class="sub-list">
+      <h3>全部分类</h3>
+      <ul>
+        <li v-for="i in data.categoryData.children" :key="i.id">
+          <RouterLink to="/">
+            <img :src="i.picture" />
+            <p>{{ i.name }}</p>
+          </RouterLink>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ref-goods"
+      v-for="item in data.categoryData.children"
+      :key="item.id"
+    >
+      <div class="head">
+        <h3>- {{ item.name }}-</h3>
+      </div>
+      <div class="body">
+        <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { getCategoryApi } from "@/apis/category";
-import { onMounted, reactive, watch } from "vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
-const data = reactive({
-  categoryData: {},
-});
+// import { getCategoryApi } from "@/apis/category";
 
-onMounted(()=>{
-  getCategory()
-})
+// import { onMounted, reactive } from "vue";
+// import { useRoute ,onBeforeRouteUpdate} from "vue-router";
+import GoodsItem from "../Home/components/GoodsItem.vue";
+//导入banner的hooks函数
+import {useBanner} from './hooks/useBanner';
+//导入category的hooks函数
+import { useCategory } from "./hooks/useCategory";
+// const route = useRoute();
+const {data2}=useBanner();
+const {data} =useCategory()
+// const data = reactive({
+//   categoryData: {},
+//   // bannerData: [],
+// });
+
+// onMounted(() => {
+//   //获取分类数据
+//   getCategory();
+//   //获取banner数据
+//   // getBannerFun();
+//   console.log(data2);
+// });
+//期望路由参数发生变化时，可以重新调用分类接口
 //监听路由变化
-watch(
-  () => route.params.id,
-  () => {
-    getCategory()
-  }
-);
-const getCategory = async () => {
- 
-  let res = await getCategoryApi(route.params.id);
-  console.log(res);
-  if (res.code == 1) {
-    data.categoryData = res.result;
-  }
-};
+// onBeforeRouteUpdate((to)=>{
+//   console.log('参数发生了变化',to);
+//   getCategory(to.params.id)
+// })
+
+//id=route.params.id 表示默认参数
+// const getCategory = async (id=route.params.id) => {
+//   let res = await getCategoryApi(id);
+//   console.log(res);
+//   if (res.code == 1) {
+//     data.categoryData = res.result;
+//   }
+// };
+//获取banner函数
+// const getBannerFun = async () => {
+//   let res = await getBanner({ distributionSite: "2" });
+//   console.log(res);
+//   if (res.code == 1) {
+//     data.bannerData = res.result;
+//   }
+// };
 </script>
 
 <style lang="less" scoped>
@@ -116,6 +170,17 @@ const getCategory = async () => {
 
   .bread-container {
     padding: 25px 0;
+  }
+
+  .home-banner {
+    width: 1240px;
+    height: 500px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: 500px;
+    }
   }
 }
 </style>
