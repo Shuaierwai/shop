@@ -25,6 +25,12 @@ const routes = [
         name: "subCategory",
         component: ()=>import('@/views/SubCategory/index.vue')
       },
+      //商品详情
+      {
+        path: "detail/:id",
+        name: "detail",
+        component: ()=>import('@/views/Detail/index.vue')
+      },
     ],
   },
   {
