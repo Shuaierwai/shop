@@ -15,7 +15,7 @@
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImageView :imageList="detailGoods.mainPictures"/>
+              <XtxImageView :imageList="detailGoods.mainPictures"/>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -64,7 +64,7 @@
                 </dl>
               </div>
               <!-- sku组件 -->
-
+               <XtxSku :goods="detailGoods" @change="changeBtn"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
@@ -108,7 +108,10 @@
 <script setup>
 //导入子组件
 import DetailHot from './components/DetailHot.vue';
-import ImageView from '@/components/ImageView/index.vue'
+//这个二个组件已经全局注册了。
+// import ImageView from '@/components/ImageView/index.vue';
+// //导入sku组件
+// import xtuSku from '@/components/XtxSku/index.vue'
 import {getDetailApi} from '@/apis/detail';
 import {onMounted,ref} from 'vue';
 import {useRoute} from 'vue-router';
@@ -127,6 +130,11 @@ let getDetail=async()=>{
     if(res.code==1){
       detailGoods.value=res.result
     }
+}
+
+//sku change 事件
+const changeBtn=(sku)=>{
+  console.log(sku);
 }
 </script>
 
