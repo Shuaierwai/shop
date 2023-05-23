@@ -135,6 +135,7 @@ let getDetail=async()=>{
 //sku change 事件
 const changeBtn=(sku)=>{
   console.log(sku);
+  
 }
 </script>
 
