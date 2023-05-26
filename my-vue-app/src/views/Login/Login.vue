@@ -78,7 +78,7 @@ const formRef = ref(null);
 const router = useRouter();
 const userStore = useUserStore();
 const form = reactive({
-  account: "12056258282", //用户名
+  account: "12056258292", //用户名
   password: "hm#qd@23!", //密码
   agree: true, //是否同意协议
 });

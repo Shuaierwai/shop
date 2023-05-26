@@ -66,10 +66,10 @@
               <!-- sku组件 -->
                <XtxSku :goods="detailGoods" @change="changeBtn"/>
               <!-- 数据组件 -->
-
+              <el-input-number v-model="count"  @change="countChange" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button size="large" class="btn" @click="addCartBtn"> 加入购物车 </el-button>
               </div>
             </div>
           </div>
@@ -106,6 +106,10 @@
 </template>
 
 <script setup>
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+//导入pinia
+import { useCartStore } from '@/stores/cartStore';
 //导入子组件
 import DetailHot from './components/DetailHot.vue';
 //这个二个组件已经全局注册了。
@@ -116,6 +120,8 @@ import {getDetailApi} from '@/apis/detail';
 import {onMounted,ref} from 'vue';
 import {useRoute} from 'vue-router';
 const route=useRoute();
+//使用pinia
+const cartStore=useCartStore();
 const detailGoods=ref({})
 onMounted(()=>{
     getDetail();
@@ -133,9 +139,37 @@ let getDetail=async()=>{
 }
 
 //sku change 事件
+//未选择规格时，点击购物车会提示弹框
+let skuObj={}
 const changeBtn=(sku)=>{
   console.log(sku);
-  
+   skuObj=sku
+}
+
+//商品数量改变
+let count =ref(1);
+let countChange=(value)=>{
+  console.log(value);
+}
+
+//点击购物车时
+let addCartBtn=()=>{
+  if(skuObj.skuId){
+     //表示已经选择规格 ，触发pinia的cartStore addCart事件
+     cartStore.addCart({
+       id:detailGoods.value.id,//商品id
+       name:detailGoods.value.name,//商品名字
+       picture:detailGoods.value.mainPictures[0], //图片
+       price:detailGoods.value.price,//最新价格
+       count: count.value,//商品数量
+       skuId:skuObj.skuId,//skuId,
+       attrsText:skuObj.specsText,//商品规格文本
+       selected:true, //商品是否选中
+     })
+     ElMessage.success('成功加入购物车！')
+  }else{
+    ElMessage.warning('请选择规格')
+  }
 }
 </script>
 

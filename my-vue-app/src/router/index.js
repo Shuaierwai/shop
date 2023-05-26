@@ -31,6 +31,28 @@ const routes = [
         name: "detail",
         component: ()=>import('@/views/Detail/index.vue')
       },
+      {
+        path: "shopCart",
+        name: "shopCart",
+        component: ()=>import('@/views/shopCart/index.vue')
+      },
+      //订单详情
+      {
+        path: "checkoutCart",
+        name: "checkoutCart",
+        component: ()=>import('@/views/CheckoutCart/index.vue')
+      },
+      //支付页面
+      {
+        path: "pay",
+        name: "pay",
+        component: ()=>import('@/views/pay/index.vue')
+      },
+      {
+        path: "paycallback",
+        name: "paycallback",
+        component: ()=>import('@/views/pay/PaycallBack.vue')
+      },
     ],
   },
   {
